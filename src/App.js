@@ -1,71 +1,33 @@
-import React, { useMemo, useState } from "react";
-import PostFilter from "./components/PostFilter.jsx";
-import PostForm from "./components/PostForm.jsx";
-import PostList from "./components/PostList.jsx";
-import MyButton from "./components/UI/buttons/MyButton.jsx";
-import MyModal from "./components/UI/MyModal/MyModal.jsx";
-
-
+import React, { useEffect } from "react";
+import { BrowserRouter} from "react-router-dom";
+import { useState } from "react/cjs/react.development";
+import AppRouter from "./components/AppRouter";
+import Navbar from "./components/UI/Navbar/Navbar";
+import { AuthContext } from "./context";
 import "./styles/app.css"
 
+
 function App() {
-// initial posts array
-  const [posts, setPosts] = useState([
-    { id: 1, title: "JS", name: "c Description" },
-    { id: 2, title: "Python", name: "a Description" },
-    { id: 3, title: "PhP", name: "b Description" },
-  ])
-// statement
-  const [filter, setFilter] = useState({sort: '', query: ''})
-  const [modal, setModal] = useState(false)
+  const [isAuth, setIsAuth] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // posts sorting
-  const sortedPosts = useMemo(()=> {
-    if (filter.sort) {
-      return [...posts].sort((a,b) => a[filter.sort].localeCompare(b[filter.sort]))
+  useEffect(() => {
+    if(localStorage.getItem('auth')) {
+      setIsAuth(true)
     }
-    return posts
-  },[filter.sort, posts])
-// post creation
-  const createPost = (newPost) => {
-    setPosts([...posts, newPost]);
-    setModal(false);
-  }
-  // deleting post
-  const findAndDelete = (postId) => {
-    const postToDelete = posts.findIndex(post => post.id === postId);
-    setPosts([...posts.slice(0, postToDelete), ...posts.slice(postToDelete+1, posts.length)])
-  }
-  
-  // searching
-  const sortedAndSearchedPosts = useMemo(() => {
-    return  sortedPosts.filter(post => post.title.toLocaleLowerCase().includes(filter.query.toLocaleLowerCase()))
-  }, [filter.query, sortedPosts])
-
+    setIsLoading(false)
+  }, [])
   return (
-    <div className="App">
-      
-      <MyModal 
-      visible={modal}
-      setVisible={setModal}
-      >
-      <PostForm create={createPost}/>
-      </MyModal>
-        
-        <PostFilter
-        filter={filter}
-        setFilter={setFilter}
-        />
-        
-        {sortedAndSearchedPosts.length !==0
-        ?
-        <PostList findAndDelete={findAndDelete} posts={sortedAndSearchedPosts} title={'posts list'}/> 
-        :
-        <h1>Posts not found</h1>}
-        <MyButton style={{margin: 'auto', width: '30%'}} onClick={() => setModal(true)}>
-        Make a post
-      </MyButton>
-    </div>
+    <AuthContext.Provider value={{
+      isAuth,
+      setIsAuth,
+      isLoading
+    }}>
+        <BrowserRouter>
+            <Navbar/>
+            <AppRouter/>
+        </BrowserRouter>
+   </AuthContext.Provider>
   );
 }
 

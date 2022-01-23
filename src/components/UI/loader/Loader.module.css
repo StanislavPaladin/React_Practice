@@ -1,0 +1,25 @@
+.wrapper{
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: rotate 3s infinite linear;
+}
+
+.loader {
+    align-self: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px dashed teal;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(8deg) scale(1);
+    }
+    
+    to {
+        transform: rotate(360deg) scale(1.4);
+    }
+}

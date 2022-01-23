@@ -6,7 +6,9 @@
 
 #root {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .App {
@@ -24,9 +26,10 @@
 }
 
 .post_content {
-    
     display: flex;
     flex-direction: column;
+    align-items: start;
+    text-align: start;
 }
 
 .form {
@@ -34,4 +37,69 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+
+
+.post-enter {
+    transform: translateX(-350px);
+}
+
+.post-enter-active {
+    transform: translateX(0px);
+    transition: all 500ms ease-in;
+}
+
+.post-exit {
+    opacity: 1;
+}
+
+.post-exit-active {
+    transform: translateX(-150px);
+    transition: all 500ms ease-in;
+}
+
+.pages__wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 15px 5px;
+    width: 20px;
+    height: 20px;
+    padding: 20px;
+    cursor: pointer;
+    border: 1px solid teal
+}
+
+.page__current {
+    border: 1px solid orange;
+    color: white;
+    background-color: teal;
+}
+
+.navbar {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    background-color: teal;
+}
+
+.navbar__items {
+    margin-left: 30px;
+    border: 1px solid white;
+}
+
+.post__btns {
+    display: flex;
+    justify-content: space-between;
 }

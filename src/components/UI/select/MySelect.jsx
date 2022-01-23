@@ -1,7 +1,6 @@
 import React from "react";
 
 const MySelect = ({ options, defaultValue, value, onChange }) => {
-    console.log();
   return (
     <div>
       <select 

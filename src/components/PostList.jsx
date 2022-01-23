@@ -1,15 +1,23 @@
 import React from "react";
-import PostItem from "../components/PostItem"
+import { TransitionGroup,CSSTransition } from "react-transition-group";
+import PostItem from "../components/PostItem";
 
-const PostList = ({title, posts, findAndDelete}) => {
- 
+const PostList = ({ title, posts, findAndDelete }) => {
   return (
-    <div>
-        <h1> {title}</h1>
-       
-      {posts.map((post, index) => (
-        <PostItem findAndDelete={findAndDelete} number={index + 1} post={post} key={post.id} />
-      ))}
+    <div style={{textAlign: 'center'}}>
+      <h1> {title}</h1>
+      <TransitionGroup>
+        {posts.map((post, index) => 
+          <CSSTransition key={post.id} timeout={500} classNames='post'>
+            <PostItem
+              findAndDelete={findAndDelete}
+              number={index + 1}
+              post={post}
+              key={post.id}
+            />
+          </CSSTransition>
+        )}
+      </TransitionGroup>
     </div>
   );
 };
